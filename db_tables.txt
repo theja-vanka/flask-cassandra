@@ -1,0 +1,10 @@
+CREATE TABLE playspace_dump.customer_master (
+    customer_code int,
+    customer_name text,
+    latitude double,
+    longitude double,
+    labels int,
+    PRIMARY KEY ((labels),customer_code)
+);
+
+COPY customer_master (customer_code , customer_name , latitude , longitude, labels) FROM '/home/master-cassandra/csvdumps/cluster_cords.csv' WITH header = true AND delimiter = ',';
