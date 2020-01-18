@@ -1,6 +1,8 @@
+# Cassandra Model Dependencies
 from cassandra.cqlengine import columns
 from cassandra.cqlengine.models import Model
 
+# CustomerMaster Model Class
 class CustomerMaster(Model):
     __table_name__ = 'customer_master'
     customer_code = columns.Integer(primary_key=True)
