@@ -29,5 +29,17 @@ class TransactionMasterPopularityAPI(Resource):
 
         itemTransaction = dict(list(asyncquery.result())[0]['brand_dev.groupbyandsum(item_code, quantity)'])
         [itemTransaction.pop(key) for key in removeitemlist if key in itemTransaction]
-        result = dict( sorted(itemTransaction.items(), key=operator.itemgetter(1),reverse=True))
+        query = dict( sorted(itemTransaction.items(), key=operator.itemgetter(1),reverse=True))
+        result = []
+        itr = 0
+        for k,v in query.items():
+            itr += 1
+            if itr < 20:
+                _ = {}
+                _temp = [dict(row) for row in ItemMaster.objects.filter(item_code=k).all().allow_filtering()]
+                _['item_name'] = _temp[0]['item_name']
+                _['quantity'] = v / 100
+                result.append(_)
+            else:
+                break
         return result, 200
