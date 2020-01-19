@@ -9,4 +9,4 @@ class CustomerMaster(Model):
     customer_name = columns.Text()
     latitude = columns.Double()
     longitude = columns.Double()
-    labels = columns.Integer(primary_key=True, clustering_order="ASC")
+    customer_label = columns.Integer(primary_key=True, clustering_order="ASC")

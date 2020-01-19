@@ -5,6 +5,8 @@ from flask_restful import Api
 
 # Controller Dependencies
 from resources.customer import CustomerMasterAPI
+from resources.items import ItemMasterAPI
+from resources.transaction import TransactionMasterPopularityAPI
 from resources.ping import pingAPI
 from resources.hello import HelloAPI
 
@@ -21,6 +23,8 @@ api = Api(app)
 api.add_resource(HelloAPI,'/') #http://127.0.0.1:8080/
 api.add_resource(pingAPI, '/ping') #http://127.0.0.1:8080/ping
 api.add_resource(CustomerMasterAPI, '/getCustomers') #http://127.0.0.1:8080/getCustomers
+api.add_resource(ItemMasterAPI, '/getItems') #http://127.0.0.1:8080/getItems
+api.add_resource(TransactionMasterPopularityAPI, '/popularityModel') #http://127.0.0.1:8080/getTransactions
 
 # Main Function for app
 if __name__ == '__main__':
