@@ -9,7 +9,7 @@ from models.customer import CustomerMaster
 # For Aggregate Functions
 from helpers.cassandradb import CassandraSession
 from helpers.globalvar import asyncquery
-import operator
+from collections import Counter
 
 # Customer Master API Scaffold
 class TransactionMasterPopularityAPI(Resource):
@@ -29,17 +29,13 @@ class TransactionMasterPopularityAPI(Resource):
 
         itemTransaction = dict(list(asyncquery.result())[0]['brand_dev.groupbyandsum(item_code, quantity)'])
         [itemTransaction.pop(key) for key in removeitemlist if key in itemTransaction]
-        query = dict( sorted(itemTransaction.items(), key=operator.itemgetter(1),reverse=True))
+        topItems = Counter(itemTransaction)
+        topItems = topItems.most_common(20) 
         result = []
-        itr = 0
-        for k,v in query.items():
-            itr += 1
-            if itr < 20:
-                _ = {}
-                _temp = [dict(row) for row in ItemMaster.objects.filter(item_code=k).all().allow_filtering()]
-                _['item_name'] = _temp[0]['item_name']
-                _['quantity'] = v / 100
-                result.append(_)
-            else:
-                break
+        for i in topItems:
+            _ = {}
+            _temp = [dict(row) for row in ItemMaster.objects.filter(item_code=i[0]).all().allow_filtering()]
+            _['item_name'] = _temp[0]['item_name']
+            _['quantity'] = i[1] / 1000
+            result.append(_)
         return result, 200
