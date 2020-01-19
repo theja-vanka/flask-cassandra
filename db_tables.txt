@@ -8,3 +8,40 @@ CREATE TABLE playspace_dump.customer_master (
 );
 
 COPY customer_master (customer_code , customer_name , latitude , longitude, labels) FROM '/home/master-cassandra/csvdumps/cluster_cords.csv' WITH header = true AND delimiter = ',';
+
+#Create Keyspace
+CREATE KEYSPACE brand_dev WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'}  AND durable_writes = true;
+
+#Create Tables
+CREATE TABLE brand_dev.customer_master (
+    customer_code int,
+    customer_name text,
+    latitude double,
+    longitude double,
+    customer_label int,
+    PRIMARY KEY (customer_label,customer_code)
+);
+ 
+CREATE TABLE brand_dev.item_master (
+    item_code int,
+    item_name text,
+    item_label int,
+    PRIMARY KEY (item_label,item_code)
+);
+
+CREATE TABLE brand_dev.transaction_master (
+    customer_code int,
+    customer_name text,
+    item_code int,
+    item_name text,
+    item_rate double,
+    quantity double,
+    amount double,
+    PRIMARY KEY (item_code, quantity))
+    WITH CLUSTERING ORDER BY (quantity DESC);
+
+COPY customer_master (customer_code , customer_name , latitude , longitude, customer_label) FROM 'cluster_cords_final.csv' WITH header = true AND delimiter = ',';
+
+COPY item_master (item_code , item_name , item_label) FROM 'item_master.csv' WITH header = true AND delimiter = ',';
+
+COPY transaction_master (customer_code , customer_name , item_code, item_name, item_rate, quantity, amount) FROM 'transaction_master.csv' WITH header = true AND delimiter = ',';
