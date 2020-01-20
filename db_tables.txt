@@ -64,6 +64,12 @@ CREATE TABLE IF NOT EXISTS brand_dev.transaction_madhuram_master (
     PRIMARY KEY ((item_code, customer_code), quantity)
 );
 
+CREATE TABLE IF NOT EXISTS brand_dev.poi_frame(
+    customer_label int,
+    poi int,
+    PRIMARY KEY (customer_label, poi)
+);
+
 # Dump Data
 COPY customer_master (customer_code , customer_name , latitude , longitude, customer_label) FROM 'cluster_cords_final.csv' WITH header = true AND delimiter = ',';
 

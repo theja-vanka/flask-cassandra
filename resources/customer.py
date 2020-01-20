@@ -5,6 +5,8 @@ import flask
 # Model dependencies
 from models.customer import CustomerMaster
 from models.cluster import NewClusterMaster
+from models.pointsofinterest import PointsOfInterestMaster
+from models.poiframe import PointsOfInterestFrame
 
 # Helper Functions
 from helpers.cassandradb import CassandraSession
@@ -34,9 +36,14 @@ class CustomerCreateAPI(Resource):
     def post(self):
         
         data = {}
-        data['latitude'] = flask.request.args.get('latitude')
-        data['longitude'] = flask.request.args.get('longitude')
-        
+        data['latitude'] = float(flask.request.form.get('latitude'))
+        data['longitude'] = float(flask.request.form.get('longitude'))
+        globalcount = 0
+        queryresult = [dict(row) for row in PointsOfInterestMaster.objects().all()]
+        for res in queryresult:
+            haverdist = Haversine(res['latitude'], res['longitude'], data['latitude'], data['longitude']).getDistance()
+            if haverdist < 1.0:
+                globalcount += 1
         queryresult = [dict(row) for row in CustomerMaster.objects().all()]
         distmin = 999
         for res in queryresult:
@@ -58,5 +65,6 @@ class CustomerCreateAPI(Resource):
         inputlabel = list(asyncquery.result())[0]['system.max(customer_label)'] + count
         asyncquery = cassObj.session.execute_async("SELECT MAX(customer_code) from customer_master ;")
         inputcode = list(asyncquery.result())[0]['system.max(customer_code)'] + count
+        result = PointsOfInterestFrame.create(customer_label=inputlabel, poi=globalcount)
         result = NewClusterMaster.create(customer_label=inputlabel, customer_code=inputcode, customer_name=random.choice(string.ascii_letters[0:4]), latitude=data['latitude'], longitude=data['longitude'])
         return dict(result),200
