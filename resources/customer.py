@@ -10,11 +10,11 @@ class CustomerMasterAPI(Resource):
         queryresult = [dict(row) for row in CustomerMaster.objects().all()]
         grouped = collections.defaultdict(list)
         for item in queryresult:
-            grouped[item['labels']].append(item)
+            grouped[item['customer_label']].append(item)
         result = []
         for model, group in grouped.items():
             resultdict = {}
-            resultdict['label'] =  model
+            resultdict['customer_label'] =  model
             resultdict['customers'] = group
             result.append(resultdict)
         return result, 200
