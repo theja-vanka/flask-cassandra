@@ -27,14 +27,15 @@ CREATE TABLE IF NOT EXISTS brand_dev.transaction_master (
     quantity double,
     amount double,
     PRIMARY KEY ((item_code, customer_code), quantity)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS brand_dev.points_of_interest (
     category text,
     latitude double,
     longitude double,
     name text,
-    PRIMARY KEY (category, latitude, longitude, name));
+    PRIMARY KEY (category, latitude, longitude, name)
+);
 
 CREATE TABLE IF NOT EXISTS brand_dev.new_cluster(
     customer_code int,
@@ -61,7 +62,7 @@ CREATE TABLE IF NOT EXISTS brand_dev.transaction_madhuram_master (
     quantity double,
     amount double,
     PRIMARY KEY ((item_code, customer_code), quantity)
-    );
+);
 
 # Dump Data
 COPY customer_master (customer_code , customer_name , latitude , longitude, customer_label) FROM 'cluster_cords_final.csv' WITH header = true AND delimiter = ',';
@@ -71,6 +72,10 @@ COPY item_master (item_code , item_name , item_label, category) FROM 'item_maste
 COPY transaction_master (customer_code , item_code, item_name, item_rate, quantity, amount) FROM 'transaction_master.csv' WITH header = true AND delimiter = ',';
 
 COPY points_of_interest (category, latitude, longitude, name) FROM 'pointsofinterest.csv' WITH header = true AND delimiter = ',';
+
+COPY item_madhuram_master (item_code , item_name , item_label, category) FROM 'item_madhuram_master.csv' WITH header = true AND delimiter = ',';
+
+COPY transaction_madhuram_master (customer_code , item_code, item_name, item_rate, quantity, amount) FROM 'transaction_madhuram_master (1).csv' WITH header = true AND delimiter = ',';
 
 # Create Functions
 CREATE FUNCTION state_groupbyandsum( state map<int, double>, type int, amount double )

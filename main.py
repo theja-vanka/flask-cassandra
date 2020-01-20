@@ -12,6 +12,9 @@ from resources.transaction import TransactionMasterPopularityAPI
 from resources.transaction import TransactionMasterCollaboratorAPI
 from resources.transaction import TransactionMasterSellerAPI
 from resources.hello import HelloAPI
+from resources.madhuram_items import ItemMadhuramMasterAPI
+from resources.madhuram_transaction import TransactionMadhuramMasterPopularityAPI
+from resources.madhuram_transaction import TransactionMadhuramMasterSellerAPI
 
 # Cassandra Session and Connection Dependencies
 from cassandra.cqlengine import connection
@@ -31,6 +34,10 @@ api.add_resource(ItemMasterAPI, '/getItems') #http://127.0.0.1:8080/getItems
 api.add_resource(TransactionMasterPopularityAPI, '/popularityModel') #http://127.0.0.1:8080/popularityModel
 api.add_resource(TransactionMasterCollaboratorAPI, '/collaborativeModel') #http://127.0.0.1:8080/collaborativeModel
 api.add_resource(TransactionMasterSellerAPI, '/getSelling') #http://127.0.0.1:8080/getSelling
+api.add_resource(ItemMadhuramMasterAPI, '/getMadhuramItems') #http://127.0.0.1:8080/getMadhuramitems
+api.add_resource(TransactionMadhuramMasterPopularityAPI, '/popularityMadhuramModel') #http://127.0.0.1:8080/popularityMadhuramModel
+api.add_resource(TransactionMadhuramMasterSellerAPI, '/sellerMadhuramModel') #http://127.0.0.1:8080/popularityMadhuramModel
+
 
 # Main Function for app
 if __name__ == '__main__':
