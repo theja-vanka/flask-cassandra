@@ -24,11 +24,11 @@ api = Api(app)
 # RESTFull End-points
 api.add_resource(HelloAPI,'/') #http://127.0.0.1:8080/
 api.add_resource(CustomerMasterAPI, '/getCustomers') #http://127.0.0.1:8080/getCustomers
+api.add_resource(CustomerCreateAPI, '/createCluster') #http://127.0.0.1:8080/createCluster
 api.add_resource(ItemMasterAPI, '/getItems') #http://127.0.0.1:8080/getItems
 api.add_resource(TransactionMasterPopularityAPI, '/popularityModel') #http://127.0.0.1:8080/popularityModel
 api.add_resource(TransactionMasterCollaboratorAPI, '/collaborativeModel') #http://127.0.0.1:8080/collaborativeModel
 api.add_resource(TransactionMasterSellerAPI, '/getSelling') #http://127.0.0.1:8080/getSelling
-api.add_resource(CustomerCreateAPI, '/createCluster') #http://127.0.0.1:8080/createCluster
 
 # Main Function for app
 if __name__ == '__main__':

@@ -36,10 +36,19 @@ CREATE TABLE IF NOT EXISTS brand_dev.points_of_interest (
     name text,
     PRIMARY KEY (category, latitude, longitude, name));
 
+CREATE TABLE IF NOT EXISTS brand_dev.new_cluster(
+    customer_code int,
+    customer_name text,
+    latitude double,
+    longitude double,
+    customer_label int,
+    PRIMARY KEY (customer_label,customer_code)
+);
+
 # Dump Data
 COPY customer_master (customer_code , customer_name , latitude , longitude, customer_label) FROM 'cluster_cords_final.csv' WITH header = true AND delimiter = ',';
 
-COPY item_master (item_code , item_name , item_label) FROM 'item_master.csv' WITH header = true AND delimiter = ',';
+COPY item_master (item_code , item_name , item_label, category) FROM 'item_master_final.csv' WITH header = true AND delimiter = ',';
 
 COPY transaction_master (customer_code , item_code, item_name, item_rate, quantity, amount) FROM 'transaction_master.csv' WITH header = true AND delimiter = ',';
 
