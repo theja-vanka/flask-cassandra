@@ -1,6 +1,6 @@
 # Flast RESTFull Dependencies
 from flask_restful import Resource, reqparse
-
+import flask
 # Model dependencies
 from models.transaction import TransactionMaster
 from models.items import ItemMaster
@@ -16,10 +16,8 @@ class TransactionMasterPopularityAPI(Resource):
 
     def get(self):
         # To force a required parameter
-        parser = reqparse.RequestParser()
-        parser.add_argument('clusterid', type=int, required=True, help='Clusterid cannot be blank')
-        data = parser.parse_args()
-        # Async query started
+        data = {}
+        data['clusterid'] = flask.request.args.get('clusterid')# Async query started
         cassObj = CassandraSession()
         asyncquery = cassObj.session.execute_async("SELECT groupbyandsum(item_code, quantity) from transaction_master")
         # Get all customers in that cluster id
@@ -46,10 +44,8 @@ class TransactionMasterPopularityAPI(Resource):
 class TransactionMasterSellerAPI(Resource):
     def get(self):
         # To force a required parameter
-        parser = reqparse.RequestParser()
-        parser.add_argument('clusterid', type=int, required=True, help='Clusterid cannot be blank')
-        data = parser.parse_args()
-        # Async query started
+        data = {}
+        data['clusterid'] = flask.request.args.get('clusterid')# Async query started
         cassObj = CassandraSession()
         asyncquery = cassObj.session.execute_async("SELECT groupbyandsum(item_code, quantity) from transaction_master")
         # Get all customers in that cluster id
@@ -87,10 +83,8 @@ class TransactionMasterSellerAPI(Resource):
 class TransactionMasterCollaboratorAPI(Resource):
     def get(self):
         # To force a required parameter
-        parser = reqparse.RequestParser()
-        parser.add_argument('clusterid', type=int, required=True, help='Clusterid cannot be blank')
-        data = parser.parse_args()
-        # Async query started
+        data = {}
+        data['clusterid'] = flask.request.args.get('clusterid')# Async query started
         cassObj = CassandraSession()
         asyncquery = cassObj.session.execute_async("SELECT groupbyandsum(item_code, quantity) from transaction_master")
         

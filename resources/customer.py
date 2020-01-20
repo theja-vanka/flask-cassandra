@@ -1,5 +1,6 @@
 # Flast RESTFull Dependencies
-from flask_restful import Resource, reqparse
+from flask_restful import Resource
+import flask
 
 # Model dependencies
 from models.customer import CustomerMaster
@@ -31,10 +32,11 @@ class CustomerMasterAPI(Resource):
 class CustomerCreateAPI(Resource):
 
     def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('latitude', type=float, required=True, help='Latitude cannot be blank')
-        parser.add_argument('longitude', type=float, required=True, help='Longitude cannot be blank')
-        data = parser.parse_args()
+        
+        data = {}
+        data['latitude'] = flask.request.args.get('latitude')
+        data['longitude'] = flask.request.args.get('longitude')
+        
         queryresult = [dict(row) for row in CustomerMaster.objects().all()]
         distmin = 999
         for res in queryresult:

@@ -1,5 +1,6 @@
 # Flast RESTFull Dependencies
 from flask_restful import Resource, reqparse
+import flask
 
 # Model dependencies
 from models.madhuram_transaction import TransactionMadhuramMaster
@@ -16,9 +17,8 @@ class TransactionMadhuramMasterPopularityAPI(Resource):
 
     def get(self):
         # To force a required parameter
-        parser = reqparse.RequestParser()
-        parser.add_argument('clusterid', type=int, required=True, help='Clusterid cannot be blank')
-        data = parser.parse_args()
+        data = {}
+        data['clusterid'] = flask.request.args.get('clusterid')
         # Async query started
         cassObj = CassandraSession()
         asyncquery = cassObj.session.execute_async("SELECT groupbyandsum(item_code, quantity) from transaction_madhuram_master")
@@ -46,9 +46,8 @@ class TransactionMadhuramMasterPopularityAPI(Resource):
 class TransactionMadhuramMasterSellerAPI(Resource):
     def get(self):
         # To force a required parameter
-        parser = reqparse.RequestParser()
-        parser.add_argument('clusterid', type=int, required=True, help='Clusterid cannot be blank')
-        data = parser.parse_args()
+        data = {}
+        data['clusterid'] = flask.request.args.get('clusterid')
         # Async query started
         cassObj = CassandraSession()
         asyncquery = cassObj.session.execute_async("SELECT groupbyandsum(item_code, quantity) from transaction_madhuram_master")
@@ -88,10 +87,9 @@ class TransactionMadhuramMasterSellerAPI(Resource):
 class TransactionMadhuramMasterCollaboratorAPI(Resource):
     def get(self):
         # To force a required parameter
-        parser = reqparse.RequestParser()
-        parser.add_argument('clusterid', type=int, required=True, help='Clusterid cannot be blank')
-        data = parser.parse_args()
+        data = {}
+        data['clusterid'] = flask.request.args.get('clusterid')
         # Async query started
         cassObj = CassandraSession()
         asyncquery = cassObj.session.execute_async("SELECT groupbyandsum(item_code, quantity) from transaction_master")
-        
+        return "Success", 200
