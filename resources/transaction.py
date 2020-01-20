@@ -8,7 +8,6 @@ from models.customer import CustomerMaster
 
 # For Aggregate Functions
 from helpers.cassandradb import CassandraSession
-from helpers.globalvar import asyncquery
 from collections import Counter
 
 # Customer Master API Scaffold
@@ -19,6 +18,9 @@ class TransactionMasterPopularityAPI(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('clusterid', type=int, required=True, help='Clusterid cannot be blank')
         data = parser.parse_args()
+        # Async query started
+        cassObj = CassandraSession()
+        asyncquery = cassObj.session.execute_async("SELECT groupbyandsum(item_code, quantity) from transaction_master")
         # Get all customers in that cluster id
         customers = [dict(row) for row in CustomerMaster.objects.filter(customer_label=data['clusterid']).allow_filtering().all()]
         # Create list of items to be removed from query
