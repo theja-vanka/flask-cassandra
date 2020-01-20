@@ -54,7 +54,7 @@ class TransactionMasterSellerAPI(Resource):
         asyncquery = cassObj.session.execute_async("SELECT groupbyandsum(item_code, quantity) from transaction_master")
         # Get all customers in that cluster id
         customers = [dict(row) for row in CustomerMaster.objects.filter(customer_label=data['clusterid']).allow_filtering().all()]
-        # Create list of items to be removed from query
+        # Create list of items that are selling from query
         sellingitemlist = []
         for customer in customers:
             for request in [dict(row)for row in TransactionMaster.objects.distinct(['item_code','customer_code']).filter(customer_code=customer['customer_code']).allow_filtering().all()]:
@@ -65,10 +65,12 @@ class TransactionMasterSellerAPI(Resource):
         for k, v in items.items():
             _ = {}
             _temp = [dict(row) for row in ItemMaster.objects.filter(item_code=k).all().allow_filtering()]
-            print(_temp)
+            _temp2 = [dict(row) for row in TransactionMaster.objects.filter(item_code=k).all().allow_filtering()]
             _['item_name'] = _temp[0]['item_name']
             _['category'] = _temp[0]['category']
-            _['quantity'] = math.log1p(v)
+            _['logquantity'] = math.log1p(v)
+            _['quantity'] = v
+            _['unitprice'] = round(_temp2[0]['item_rate'])
             queryresult.append(_)
         
         grouped = defaultdict(list)
