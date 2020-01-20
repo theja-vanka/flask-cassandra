@@ -5,9 +5,11 @@ from flask_restful import Api
 
 # Controller Dependencies
 from resources.customer import CustomerMasterAPI
+from resources.customer import CustomerCreateAPI
 from resources.items import ItemMasterAPI
 from resources.transaction import TransactionMasterPopularityAPI
-from resources.ping import pingAPI
+from resources.transaction import TransactionMasterCollaboratorAPI
+from resources.transaction import TransactionMasterSellerAPI
 from resources.hello import HelloAPI
 
 # Cassandra Session and Connection Dependencies
@@ -21,10 +23,12 @@ api = Api(app)
 
 # RESTFull End-points
 api.add_resource(HelloAPI,'/') #http://127.0.0.1:8080/
-api.add_resource(pingAPI, '/ping') #http://127.0.0.1:8080/ping
 api.add_resource(CustomerMasterAPI, '/getCustomers') #http://127.0.0.1:8080/getCustomers
 api.add_resource(ItemMasterAPI, '/getItems') #http://127.0.0.1:8080/getItems
-api.add_resource(TransactionMasterPopularityAPI, '/popularityModel') #http://127.0.0.1:8080/getTransactions
+api.add_resource(TransactionMasterPopularityAPI, '/popularityModel') #http://127.0.0.1:8080/popularityModel
+api.add_resource(TransactionMasterCollaboratorAPI, '/collaborativeModel') #http://127.0.0.1:8080/collaborativeModel
+api.add_resource(TransactionMasterSellerAPI, '/getSelling') #http://127.0.0.1:8080/getSelling
+api.add_resource(CustomerCreateAPI, '/createCluster') #http://127.0.0.1:8080/createCluster
 
 # Main Function for app
 if __name__ == '__main__':

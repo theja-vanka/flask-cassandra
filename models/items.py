@@ -8,3 +8,4 @@ class ItemMaster(Model):
     item_code = columns.Integer(primary_key=True)
     item_name = columns.Text()
     item_label = columns.Integer(primary_key=True, clustering_order="ASC")
+    category = columns.Text()

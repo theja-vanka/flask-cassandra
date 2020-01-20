@@ -18,3 +18,8 @@ class CustomerMasterAPI(Resource):
             resultdict['customers'] = group
             result.append(resultdict)
         return result, 200
+
+class CustomerCreateAPI(Resource):
+
+    def post(self):
+        return "Success",200

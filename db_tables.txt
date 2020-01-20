@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS brand_dev.item_master (
     item_code int,
     item_name text,
     item_label int,
+    category text,
     PRIMARY KEY (item_label,item_code)
 );
 
