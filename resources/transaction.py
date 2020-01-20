@@ -39,7 +39,7 @@ class TransactionMasterPopularityAPI(Resource):
             _ = {}
             _temp = [dict(row) for row in ItemMaster.objects.filter(item_code=i[0]).all().allow_filtering()]
             _['item_name'] = _temp[0]['item_name']
-            _['quantity'] = i[1] / 1200
+            _['quantity'] = i[1] / 1212
             result.append(_)
         return result, 200
 

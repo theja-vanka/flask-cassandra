@@ -45,6 +45,24 @@ CREATE TABLE IF NOT EXISTS brand_dev.new_cluster(
     PRIMARY KEY (customer_label,customer_code)
 );
 
+CREATE TABLE IF NOT EXISTS brand_dev.item_madhuram_master (
+    item_code int,
+    item_name text,
+    item_label int,
+    category text,
+    PRIMARY KEY (item_label,item_code)
+);
+
+CREATE TABLE IF NOT EXISTS brand_dev.transaction_madhuram_master (
+    customer_code int,
+    item_code int,
+    item_name text,
+    item_rate double,
+    quantity double,
+    amount double,
+    PRIMARY KEY ((item_code, customer_code), quantity)
+    );
+
 # Dump Data
 COPY customer_master (customer_code , customer_name , latitude , longitude, customer_label) FROM 'cluster_cords_final.csv' WITH header = true AND delimiter = ',';
 
