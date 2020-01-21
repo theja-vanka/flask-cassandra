@@ -5,6 +5,7 @@ from cassandra.cqlengine.models import Model
 # CustomerMaster Model Class
 class TransactionMadhuramMaster(Model):
     __table_name__ = 'transaction_madhuram_master'
+    __keyspace__ = 'brand_dev'
     customer_code = columns.Integer(primary_key=True)
     item_code = columns.Integer(primary_key=True)
     item_name = columns.Text()

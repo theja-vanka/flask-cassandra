@@ -5,6 +5,7 @@ from cassandra.cqlengine.models import Model
 # CustomerMaster Model Class
 class PointsOfInterestMaster(Model):
     __table_name__ = 'points_of_interest'
+    __keyspace__ = 'brand_dev'
     category = columns.Text(primary_key=True)
     latitude = columns.Double(primary_key=True, clustering_order="ASC")
     longitude = columns.Double(primary_key=True, clustering_order="ASC")
