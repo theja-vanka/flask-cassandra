@@ -21,10 +21,8 @@ class ClusterPropAPI(Resource):
         cassObj = CassandraSession()
         asyncquery = cassObj.session.execute_async('SELECT MAX(poi) FROM poi_frame ;')
         maxvalue = list(asyncquery.result())[0]['system.max(poi)']
-        print(maxvalue)
         asyncquery = cassObj.session.execute_async('SELECT * FROM poi_frame WHERE customer_label ='+data['clusterid'])
         queryresult = list(asyncquery.result())
-        print(queryresult)
         returndict = {}
         returndict['probability'] = (maxvalue - queryresult[0]['poi']) / maxvalue
         returndict['customer_label'] = queryresult[0]['customer_label']

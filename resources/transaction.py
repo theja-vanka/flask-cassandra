@@ -83,8 +83,4 @@ class TransactionMasterSellerAPI(Resource):
 class TransactionMasterCollaboratorAPI(Resource):
     def get(self):
         # To force a required parameter
-        data = {}
-        data['clusterid'] = flask.request.args.get('clusterid')# Async query started
-        cassObj = CassandraSession()
-        asyncquery = cassObj.session.execute_async("SELECT groupbyandsum(item_code, quantity) from transaction_master")
-        
+        return "Nothing",200

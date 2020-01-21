@@ -31,6 +31,11 @@ class TransactionMadhuramMasterPopularityAPI(Resource):
                 removeitemlist.append(request['item_code'])
 
         itemTransaction = dict(list(asyncquery.result())[0]['brand_dev.groupbyandsum(item_code, quantity)'])
+        asyncquery1 = cassObj.session.execute_async('SELECT MAX(poi) FROM poi_frame ;')
+        asyncquery2 = cassObj.session.execute_async('SELECT * FROM poi_frame WHERE customer_label ='+data['clusterid'])
+        maxvalue = list(asyncquery1.result())[0]['system.max(poi)']
+        queryresult = list(asyncquery2.result())
+        currentPOI = queryresult[0]['poi']/maxvalue
         [itemTransaction.pop(key) for key in removeitemlist if key in itemTransaction]
         topItems = Counter(itemTransaction)
         topItems = topItems.most_common(20) 
@@ -39,7 +44,7 @@ class TransactionMadhuramMasterPopularityAPI(Resource):
             _ = {}
             _temp = [dict(row) for row in ItemMaster.objects.filter(item_code=i[0]).all().allow_filtering()]
             _['item_name'] = _temp[0]['item_name']
-            _['quantity'] = i[1] / 1212
+            _['quantity'] = (i[1] * currentPOI) / 1200
             result.append(_)
         return result, 200
 

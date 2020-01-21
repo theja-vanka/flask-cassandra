@@ -10,7 +10,6 @@ from resources.cluster import NewClusterAPI
 from resources.cluster import ClusterPropAPI
 from resources.items import ItemMasterAPI
 from resources.transaction import TransactionMasterPopularityAPI
-from resources.transaction import TransactionMasterCollaboratorAPI
 from resources.transaction import TransactionMasterSellerAPI
 from resources.hello import HelloAPI
 from resources.madhuram_items import ItemMadhuramMasterAPI
@@ -34,7 +33,6 @@ api.add_resource(NewClusterAPI,'/getNewClusters') #http://127.0.0.1:8080/getNewC
 api.add_resource(ClusterPropAPI,'/getNewClusterprop') #http://127.0.0.1:8080/getNewClusterprop
 api.add_resource(ItemMasterAPI, '/getItems') #http://127.0.0.1:8080/getItems
 api.add_resource(TransactionMasterPopularityAPI, '/popularityModel') #http://127.0.0.1:8080/popularityModel
-api.add_resource(TransactionMasterCollaboratorAPI, '/collaborativeModel') #http://127.0.0.1:8080/collaborativeModel
 api.add_resource(TransactionMasterSellerAPI, '/getSelling') #http://127.0.0.1:8080/getSelling
 api.add_resource(ItemMadhuramMasterAPI, '/getMadhuramItems') #http://127.0.0.1:8080/getMadhuramitems
 api.add_resource(TransactionMadhuramMasterPopularityAPI, '/popularityMadhuramModel') #http://127.0.0.1:8080/popularityMadhuramModel
